@@ -1,0 +1,1 @@
+minuimum online judge
