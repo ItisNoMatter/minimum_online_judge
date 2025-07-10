@@ -3,6 +3,8 @@ import os
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] ="./uploads"
 
+new_id = 0
+
 @app.route('/')
 def index():
     return 'Hello World!'
@@ -17,8 +19,13 @@ def upload():
 
 
 def store_file(uploaded_file):
+    global new_id
 
-    save_path = os.path.join(app.config["UPLOAD_FOLDER"], uploaded_file.filename)
+    dir_path = os.path.join(app.config["UPLOAD_FOLDER"], str(new_id))
+    os.makedirs(dir_path, exist_ok=True)
+    
+    save_path = os.path.join(dir_path,uploaded_file.filename)
+    
     uploaded_file.save(save_path)
     return save_path
 
