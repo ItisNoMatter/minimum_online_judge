@@ -10,14 +10,13 @@ def index():
 @app.route("/upload",methods=["POST"])
 def upload():
     uploaded_file = request.files.get("file")
-    if uploaded_file is None or uploaded_file.filename == '':
-        return "No file uploaded", 400
     save_path = store_file(uploaded_file)
     return f"Saved file to {save_path}"
 
 
 def store_file(uploaded_file):
-
+    if uploaded_file is None or uploaded_file.filename == '':
+        return "No file uploaded", 400
     save_path = os.path.join(app.config["UPLOAD_FOLDER"], uploaded_file.filename)
     uploaded_file.save(save_path)
     return save_path
